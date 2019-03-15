@@ -35,7 +35,7 @@ private fun processData(records: Sequence<String>) {
 
     log.info("start to merge users")
     UserMerge.merge(users).forEach {
-        log.info(it.toUserDataFormat())
+        log.info(it.toOutputDataFormat())
     }
 
     val finishTime = ZonedDateTime.now()
