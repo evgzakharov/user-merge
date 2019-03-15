@@ -5,6 +5,6 @@ data class UserWithEmails(
     val emails: MutableSet<String>
 ) {
     fun toOutputDataFormat(): String {
-        return "$userName -> ${emails.joinToString(" ,")}"
+        return "$userName -> ${emails.joinToString(", ")}"
     }
 }
