@@ -2,6 +2,8 @@ package test
 
 import org.slf4j.LoggerFactory
 import java.io.File
+import java.time.Duration
+import java.time.ZonedDateTime
 
 private val log = LoggerFactory.getLogger(::main.javaClass)
 
@@ -25,13 +27,20 @@ fun main(args: Array<String>) {
 }
 
 private fun processData(records: Sequence<String>) {
+    log.info("begin..")
+    val startTime = ZonedDateTime.now()
+
     val users = records.asSequence()
         .map { it.toUserWithEmails() }
 
-    log.info("merge users:")
+    log.info("start to merge users")
     UserMerge.merge(users).forEach {
         log.info(it.toString())
     }
+
+    val finishTime = ZonedDateTime.now()
+    val diff = Duration.between(startTime, finishTime).toMillis()
+    log.info("merge finished. time (in millis): $diff")
 }
 
 private fun usage(): String = """
