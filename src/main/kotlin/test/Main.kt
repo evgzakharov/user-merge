@@ -33,13 +33,16 @@ private fun processData(records: Sequence<String>) {
     val users = records.asSequence()
         .map { it.toUserWithEmails() }
 
-    UserMerge.merge(users).forEach {
-        log.info(it.toOutputDataFormat())
-    }
+    val mergedUsers = UserMerge.merge(users)
 
     val finishTime = ZonedDateTime.now()
     val diff = Duration.between(startTime, finishTime).toMillis()
     log.info("merge finished. time (in millis): $diff")
+
+    log.info("users:")
+    mergedUsers.forEach {
+        log.info(it.toOutputDataFormat())
+    }
 }
 
 private fun usage(): String = """
