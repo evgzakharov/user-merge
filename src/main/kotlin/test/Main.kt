@@ -33,7 +33,6 @@ private fun processData(records: Sequence<String>) {
     val users = records.asSequence()
         .map { it.toUserWithEmails() }
 
-    log.info("start to merge users")
     UserMerge.merge(users).forEach {
         log.info(it.toOutputDataFormat())
     }
