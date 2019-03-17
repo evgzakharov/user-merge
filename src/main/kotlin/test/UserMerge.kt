@@ -14,8 +14,14 @@ class UserMerge private constructor(private val usersWithEmails: Sequence<UserWi
             emails.forEach { email ->
                 emailsToUsersWithEmails[email]?.let { existUserWithEmails ->
                     if (findUser == null) {
-                        existUserWithEmails.emails += emails
                         findUser = existUserWithEmails
+                        existUserWithEmails.emails += emails
+                    } else if (findUser != existUserWithEmails) {
+                        findUser?.let {
+                            it.emails += existUserWithEmails.emails
+                            emailsToUsersWithEmails[email] = it
+                        }
+                        uniqUsers.remove(existUserWithEmails)
                     }
                 } ?: run {
                     notFindEmails += email
